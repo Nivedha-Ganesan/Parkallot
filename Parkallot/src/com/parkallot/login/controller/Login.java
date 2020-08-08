@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.parkallot.admin.dao.AdminDao;
 import com.parkallot.login.dao.LoginDao;
 
 @WebServlet("/Login")
@@ -17,6 +18,7 @@ public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private LoginDao loginDao = new LoginDao();
+	private AdminDao adminDao = new AdminDao();
      
 	/*
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -25,18 +27,19 @@ public class Login extends HttpServlet {
 	}*/
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.print("doPost method");
 		String mobile = request.getParameter("mobile");
 		String password = request.getParameter("password");
 		
 		try {
 			if (loginDao.isRegisteredUser(mobile, password)) {
-				System.out.println("Registered user");
 				HttpSession session = request.getSession();
 				session.setAttribute("mobile", mobile);
-				response.sendRedirect("welcome.jsp");
+				if (adminDao.isAdmin(mobile, password)) {
+					response.sendRedirect("admin.jsp");
+				} else {
+					response.sendRedirect("add_allotment.jsp");
+				}
 			} else {
-				System.out.println("Else");
 				response.sendRedirect("index.html");
 			}
 		} catch (Exception e) {

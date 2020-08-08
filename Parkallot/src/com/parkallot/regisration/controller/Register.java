@@ -35,7 +35,6 @@ public class Register extends HttpServlet {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-	    System.out.print("SUCCESS");
 	    response.sendRedirect("index.html");
 	}
 

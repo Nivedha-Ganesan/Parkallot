@@ -17,7 +17,7 @@ public class Logout extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.removeAttribute("mobile");
 		session.invalidate();
-		response.sendRedirect("login.jsp");
+		response.sendRedirect("index.html");
 	}
 	
 }

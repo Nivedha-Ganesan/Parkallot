@@ -17,7 +17,6 @@ public class LoginDao {
 			st.setString(1, mobile);
 			st.setString(2, password);
 			ResultSet rs = st.executeQuery();
-			System.out.print(st.toString());
 			if (rs.next()) {
 				return true;
 			}
